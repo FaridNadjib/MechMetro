@@ -26,16 +26,15 @@ public class MouseMovement : MonoBehaviour
         {
             {
                 distaceToCollectable = Vector3.Distance(transform.position, Collectable.transform.position);
+
+                if (distaceToCollectable < CollectableRange)
+                {
+                    // go to the collectable to pick it up
+                    Debug.Log("Me want screws");
+                    agent.SetDestination(Collectable.transform.position);
+                }
             }
         }
-
-        if (distaceToCollectable < CollectableRange)
-        {
-            // go to the collectable to pick it up
-            Debug.Log("Me want screws");
-            agent.SetDestination(Collectable.transform.position);
-        }
-
         else if (agent.remainingDistance <= agent.stoppingDistance) //done with path
         {
             Vector3 point;
