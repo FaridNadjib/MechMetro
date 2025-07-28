@@ -15,13 +15,13 @@ public class CollectableController : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        Debug.Log("I hit something");
+        Debug.Log("I hit something trigger");
         if (other.gameObject.CompareTag("Collectable"))
         {
             Debug.Log("I Collected something");
-            Destroy(other);
+            Destroy(other.gameObject);
             collectablesStored++;
         }
     }
