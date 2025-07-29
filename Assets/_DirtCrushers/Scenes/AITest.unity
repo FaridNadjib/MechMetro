@@ -245,9 +245,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 74646866}
   range: 10
-  CollectableRange: 20
+  CollectableRange: 10
   Collectable: {fileID: 264292441}
   centrePoint: {fileID: 74646868}
+  Player: {fileID: 708803971}
+  EnemyDistanceRun: 2
 --- !u!4 &74646868
 Transform:
   m_ObjectHideFlags: 0
@@ -810,12 +812,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   accelerationForce: 7
   rotationSpeed: 240
-  rb: {fileID: 0}
+  rotationAlignSpeed: 0.02
+  gravityMultiplier: -9.81
+  jumpForce: 20
+  jumpBlockDuration: 0.3
+  boostForce: 10
+  boostDuration: 0.5
+  boostBlockDuration: 0.2
+  isBoosting: 0
+  collisionSpeedThreshold: 4
+  collisionRecoverDuration: 0.5
   navigationPoint: {fileID: 1814774732}
+  groundCheckOffset: {x: 0, y: -0.1, z: 0}
   groundCheckDistance: 1
+  skateSplineCheckDistance: 0.35
   groundLayer:
     serializedVersion: 2
     m_Bits: 1
+  movementBlocked: 0
+  startSplineRatio: 0
 --- !u!4 &708803975
 Transform:
   m_ObjectHideFlags: 0
