@@ -106,6 +106,9 @@ public class Player : MonoBehaviour
             {
             }
             rb.linearVelocity = currentDirection * acceleration;
+            Quaternion targetRotation = Quaternion.FromToRotation(transform.up, hitInfo.normal) * transform.rotation;
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationAlignSpeed);
+            
         } 
         else
         {
@@ -113,7 +116,7 @@ public class Player : MonoBehaviour
             if(rb.linearVelocity.y < -0.1f) { rb.AddForce(Vector3.down *gravityMultiplier); }
         }
         
-        transform.forward = Vector3.Slerp(transform.forward, rb.linearVelocity, rotationAlignSpeed * Time.deltaTime);
+        //transform.forward = Vector3.Slerp(transform.forward, rb.linearVelocity, rotationAlignSpeed * Time.deltaTime);
         //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(rb.linearVelocity), rotationAlignSpeed);
     }
     IEnumerator BoostRoutine()
