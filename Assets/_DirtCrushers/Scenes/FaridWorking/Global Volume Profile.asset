@@ -626,10 +626,10 @@ MonoBehaviour:
     m_Value: {fileID: 0}
     dimension: 1
   outline:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 1
   outlineColor:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: {r: 0.3066038, g: 0.48728257, b: 1, a: 0.8}
   outlineTechnique:
     m_OverrideState: 0
