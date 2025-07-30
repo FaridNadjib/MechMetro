@@ -2,7 +2,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 // this component is used as a storage for data defined by the player controller that can be then reused in calculations
-class PlayerControlledEntity : MonoBehaviour
+public class PlayerControlledEntity : MonoBehaviour
 {
     public Vector3 PlayerControllerForwardVector;
     public Vector3 InputAdjustedForwardVector; // a combination of the PlayerControllerForwardVector and the input direction
@@ -16,6 +16,7 @@ class PlayerControlledEntity : MonoBehaviour
         if (Mathf.Approximately(forwardInput, 0f) && Mathf.Approximately(rightInput, 0f))
         {
             InputAdjustedForwardVector = PlayerControllerForwardVector;
+            InputAdjustedRightVector = Vector3.Cross(Vector3.up, PlayerControllerForwardVector).normalized;
         }
         else
         {
@@ -28,6 +29,9 @@ class PlayerControlledEntity : MonoBehaviour
 
             if (InputAdjustedForwardVector.sqrMagnitude > 0.0001f)
                 InputAdjustedForwardVector.Normalize();
+            
+            if (InputAdjustedRightVector.sqrMagnitude > 0.0001f)
+                InputAdjustedRightVector.Normalize();
         }
     }
 }

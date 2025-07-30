@@ -1,10 +1,10 @@
 using UnityEngine;
-[RequireComponent(typeof(Rigidbody))]
-public class MechSpeedBoost : MechAbility
-{
-    [Header("Boost Settings")]
-    public float boostForce = 20f;
 
+[RequireComponent(typeof(Rigidbody))]
+public class MechJump : MechAbility
+{
+    [Header("Jump Settings")]
+    public float jumpForce = 10f;
     public LayerMask groundLayer;
     public float groundCheckDistance = 0.2f;
 
@@ -15,14 +15,14 @@ public class MechSpeedBoost : MechAbility
         base.Start();
         rb = GetComponent<Rigidbody>();
         if (activationKey == KeyCode.None)
-            activationKey = KeyCode.LeftShift;
+            activationKey = KeyCode.Space;
     }
 
     protected override void ActivateAbility()
     {
-        if (playerControlledEntity == null || !IsGrounded()) return;
-        Vector3 boostDirection = playerControlledEntity.InputAdjustedForwardVector.normalized;
-        rb.AddForce(boostDirection * boostForce, ForceMode.Impulse);
+        if (playerControlledEntity == null) return;
+        if (!IsGrounded()) return;
+        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         StartCooldown();
     }
 
