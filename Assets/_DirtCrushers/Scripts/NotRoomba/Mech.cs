@@ -2,6 +2,18 @@ using UnityEngine;
 
 public class Mech : MonoBehaviour
 {
+    [Header("Rotation Settings")]
+    [Tooltip("How quickly the mech rotates to face movement direction")]
+    public float rotationSpeed = 10f;
+    private Rigidbody rb;
+    private PlayerControlledEntity playerControlledEntity;
+
+    private bool bIsGrounded = false;
+
+    private BoxCollider GroundCheckBoxCollider;
+
+    private int NumGroundCheckOverlaps = 0;
+
     /// <summary>
     /// Checks if the mech is upside down by comparing its up vector to world up and optionally raycasting.
     /// </summary>
@@ -28,21 +40,86 @@ public class Mech : MonoBehaviour
     }
 
     /// <summary>
-    /// Checks if any MechWheel attached to this mech is grounded by raycasting down from each wheel's position.
+    /// Checks if the mech is grounded using the ground check collider.
     /// </summary>
-    /// <param name="groundLayer">LayerMask for ground detection.</param>
-    /// <param name="groundCheckDistance">Distance to check for ground below each wheel.</param>
-    /// <returns>True if any wheel is grounded, false otherwise.</returns>
-    public bool IsGroundedByWheels(LayerMask groundLayer, float groundCheckDistance)
+    /// <returns>True if the ground check collider is overlapping with ground, false otherwise.</returns>
+    public bool IsGroundedByWheels()
     {
-        var wheels = GetComponentsInChildren<MechWheel>();
-        foreach (var wheel in wheels)
+        return bIsGrounded;
+    }
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+        playerControlledEntity = GetComponent<PlayerControlledEntity>();
+        if (playerControlledEntity == null)
         {
-            Vector3 origin = wheel.transform.position;
-            Vector3 down = -transform.up;
-            if (Physics.Raycast(origin, down, groundCheckDistance + 0.1f, groundLayer))
-                return true;
+            Debug.LogWarning("No PlayerControlledEntity found on Mech");
         }
-        return false;
+
+        GroundCheckBoxCollider = GetComponent<BoxCollider>();
+        if (GroundCheckBoxCollider == null)
+        {
+            Debug.LogWarning("No BoxCollider found on Mech for ground checking");
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+
+        Debug.Log("Mech grounded: " + other.gameObject.name);
+        NumGroundCheckOverlaps++;
+        bIsGrounded = true;
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        NumGroundCheckOverlaps--;
+        if (NumGroundCheckOverlaps <= 0)
+        {
+            bIsGrounded = false;
+        }
+        Debug.Log("Mech no longer grounded: " + other.gameObject.name);
+    }
+
+    void FixedUpdate()
+    {
+        if (playerControlledEntity == null) return;
+
+        // Only proceed if we're grounded
+        if (!IsGroundedByWheels()) return;
+        if (IsUpsideDown()) return;
+
+        // Only rotate if there's movement input
+        float forwardInput = Input.GetAxis("Vertical");
+        float rightInput = Input.GetAxis("Horizontal");
+        
+        // Get the desired forward direction from player input
+        Vector3 targetForward = playerControlledEntity.InputAdjustedForwardVector;
+        targetForward.y = 0f; // Keep rotation only on Y axis
+
+        if (targetForward.magnitude > 0.1f)
+        {
+            // Get current forward direction (projected onto horizontal plane)
+            Vector3 currentForward = transform.forward;
+            currentForward.y = 0f;
+            currentForward.Normalize();
+
+            // Calculate the signed angle between current and target direction
+            float signedAngle = Vector3.SignedAngle(currentForward, targetForward, Vector3.up);
+            
+            // Get the current angular velocity around the up axis
+            float currentYawVelocity = Vector3.Dot(rb.angularVelocity, Vector3.up);
+            
+            // Calculate desired angular velocity based on the angle we need to turn
+            float desiredYawVelocity = signedAngle;
+            
+            // Calculate the difference between desired and current velocity
+            float yawVelocityDiff = desiredYawVelocity - currentYawVelocity;
+            
+            // Apply torque proportional to the velocity difference
+            Vector3 torque = Vector3.up * yawVelocityDiff * rotationSpeed;
+            rb.AddTorque(torque, ForceMode.Acceleration);
+        }
     }
 }

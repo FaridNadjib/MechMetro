@@ -20,7 +20,7 @@ public class MechSpeedBoost : MechAbility
 
     protected override void ActivateAbility()
     {
-        if (playerControlledEntity == null || !mechRef.IsGroundedByWheels(groundLayer, groundCheckDistance)) return;
+        if (playerControlledEntity == null || !mechRef.IsGroundedByWheels()) return;
         Vector3 boostDirection = playerControlledEntity.InputAdjustedForwardVector.normalized;
         rb.AddForce(boostDirection * boostForce, ForceMode.Impulse);
         StartCooldown();
