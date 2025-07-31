@@ -1103,6 +1103,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   groundCheckDistance: 0.3
+  upsideDownJumpForce: 120
+  upsideDownTorque: 50
+  torqueDelay: 0.1
 --- !u!64 &7987894999747500051
 MeshCollider:
   m_ObjectHideFlags: 0
