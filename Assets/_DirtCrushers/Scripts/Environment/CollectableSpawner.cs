@@ -36,11 +36,7 @@ public class CollectableSpawner : MonoBehaviour
     {
         if(!isSpawning) { StartCoroutine(SpawnRoutine()); }
     }
-    [ContextMenu("A")]
-    public void A()
-    {
-        var tmp = ObjectPooler.Instance.PoolSfx3D.Get(); tmp.transform.position = transform.position; tmp.PlayClip(spawnClip);
-    }
+
     IEnumerator SpawnRoutine()
     {
         isSpawning = true;
@@ -53,7 +49,7 @@ public class CollectableSpawner : MonoBehaviour
 
             if (spawnedObjects.Count < maxSpawnAmount)
             {
-                if (spawnClip != null) { var tmp = ObjectPooler.Instance.PoolSfx3D.Get(); tmp.transform.position = transform.position; tmp.PlayClip(spawnClip); }
+                if (spawnClip != null) { AudioManager.Instance.PlaySfxClipPooled(spawnClip, transform.position); }
                 for (int i = 0; i < burstSpawnAmount; i++)
                 {
                     if (spawnedObjects.Count < maxSpawnAmount)

@@ -7,7 +7,7 @@ public class ObjectPooler : MonoBehaviour
 
     [Header("Bullet prefabs:")]
     [SerializeField] private SfxSource3D sfxSource3DPrefab;
-    [SerializeField] private Collectable screwPrefab;
+    [SerializeField] private Collectable[] screwPrefabs;
 
     [SerializeField] private int defaultPoolSize = 360;
     [SerializeField] private int maxPoolSize = 700;
@@ -49,7 +49,7 @@ public class ObjectPooler : MonoBehaviour
     #region Collectable
     private Collectable CreateCollectable()
     {
-        Collectable collectable = Instantiate(screwPrefab, transform.position, Quaternion.identity);
+        Collectable collectable = Instantiate(screwPrefabs[Random.Range(0,screwPrefabs.Length)], transform.position, Quaternion.identity);
         collectable.SetPool(PoolCollectables);
         collectable.transform.parent = transform;
         return collectable;
@@ -57,8 +57,6 @@ public class ObjectPooler : MonoBehaviour
     private void OnTakeCollectableFromPool(Collectable collectable)
     {
         collectable.GotUsed = false;
-        foreach(Transform child in collectable.transform) { child.gameObject.SetActive(false); }
-        collectable.transform.GetChild(Random.Range(0,collectable.transform.childCount)).gameObject.SetActive(true);
         collectable.gameObject.SetActive(true);
     }
     private void OnReturnCollectableToPool(Collectable collectable) => collectable.gameObject.SetActive(false);

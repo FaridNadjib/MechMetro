@@ -28,12 +28,11 @@ public class AudioManager : MonoBehaviour
         sfxSource2D.PlayOneShot(clip);
     }
 
-    public void PlaySfxClipPooled(AudioClip clip)
+    public void PlaySfxClipPooled(AudioClip clip,Vector3 spawnPosition)
     {
-        var tmpSource = ObjectPooler.Instance.PoolSfx3D.Get();
-
-        sfxSource2D.pitch = Random.Range(defaultPitchRange.x, defaultPitchRange.y);
-        sfxSource2D.PlayOneShot(clip);
+        var tmp = ObjectPooler.Instance.PoolSfx3D.Get(); 
+        tmp.transform.position = spawnPosition; 
+        tmp.PlayClip(clip);
     }
 
     // ToDO: fading music and ambiance.

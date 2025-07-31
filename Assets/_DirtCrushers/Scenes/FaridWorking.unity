@@ -36038,6 +36038,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 710412327208572216, guid: a1fa8bceaaf75024d944a86b2c567e18, type: 3}
+      propertyPath: screwPrefabs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 710412327208572216, guid: a1fa8bceaaf75024d944a86b2c567e18, type: 3}
+      propertyPath: 'screwPrefabs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2114030833841035990, guid: a93598ba855de2b4b923a8fd0b47f7d0, type: 3}
+    - target: {fileID: 710412327208572216, guid: a1fa8bceaaf75024d944a86b2c567e18, type: 3}
+      propertyPath: 'screwPrefabs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2114030833841035990, guid: 1e8f60c721a3e0e4aa41af4055f3b38c, type: 3}
     - target: {fileID: 917379719659243422, guid: a1fa8bceaaf75024d944a86b2c567e18, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
