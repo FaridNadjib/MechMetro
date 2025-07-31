@@ -6,7 +6,6 @@ using UnityEngine;
 public class CollectableSpawner : MonoBehaviour
 {
     [Header("Base info:")]
-    [SerializeField]    GameObject[] prefabs;
     [SerializeField] bool useForce = true;
     [SerializeField] Vector2 forceRange = new(0.5f, 2f);
     [SerializeField] Transform spawnDirection;
@@ -18,7 +17,9 @@ public class CollectableSpawner : MonoBehaviour
     [SerializeField] int maxSpawnAmount = 15;
     [SerializeField] bool spawnOnAwake = true;
     [SerializeField] Vector2 spawnAngleLimits = new(-50f,50f);
-    List<GameObject> spawnedObjects;
+    [Header("Feedback related:")]
+    [SerializeField] AudioClip spawnClip;
+    List<Collectable> spawnedObjects;
 
     bool isSpawning = false;
     Quaternion initialSpawnerRotation;
@@ -26,7 +27,7 @@ public class CollectableSpawner : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        spawnedObjects = new List<GameObject>();
+        spawnedObjects = new List<Collectable>();
         initialSpawnerRotation = spawnDirection.rotation;
         if (spawnOnAwake) { SpawnObjects(); }
     }
@@ -35,7 +36,11 @@ public class CollectableSpawner : MonoBehaviour
     {
         if(!isSpawning) { StartCoroutine(SpawnRoutine()); }
     }
-
+    [ContextMenu("A")]
+    public void A()
+    {
+        var tmp = ObjectPooler.Instance.PoolSfx3D.Get(); tmp.transform.position = transform.position; tmp.PlayClip(spawnClip);
+    }
     IEnumerator SpawnRoutine()
     {
         isSpawning = true;
@@ -47,19 +52,40 @@ public class CollectableSpawner : MonoBehaviour
                 if (spawnedObjects[i] == null) spawnedObjects.RemoveAt(i);
 
             if (spawnedObjects.Count < maxSpawnAmount)
+            {
+                if (spawnClip != null) { var tmp = ObjectPooler.Instance.PoolSfx3D.Get(); tmp.transform.position = transform.position; tmp.PlayClip(spawnClip); }
                 for (int i = 0; i < burstSpawnAmount; i++)
                 {
                     if (spawnedObjects.Count < maxSpawnAmount)
                     {
                         spawnDirection.rotation = initialSpawnerRotation * Quaternion.AngleAxis(Random.Range(spawnAngleLimits.x, spawnAngleLimits.y), spawnDirection.forward);
                         spawnDirection.rotation *= Quaternion.AngleAxis(Random.Range(spawnAngleLimits.x, spawnAngleLimits.y), spawnDirection.up);
-                        var tmp = Instantiate(prefabs[Random.Range(0, prefabs.Length)], spawnDirection.position, spawnDirection.rotation);
-                        if (useForce && tmp.TryGetComponent(out Rigidbody rb)) { rb.AddForce(spawnDirection.forward * Random.Range(forceRange.x, forceRange.y),ForceMode.Impulse); }
+                        //var tmp = Instantiate(prefabs[Random.Range(0, prefabs.Length)], spawnDirection.position, spawnDirection.rotation);
+                        var tmp = ObjectPooler.Instance.PoolCollectables.Get();
+                        tmp.transform.position = spawnDirection.position;
+                        tmp.transform.rotation = spawnDirection.rotation;
+                        tmp.OnReleased += CountActiveSpawns;
+                        if (useForce && tmp.gameObject.TryGetComponent(out Rigidbody rb)) { rb.AddForce(spawnDirection.forward * Random.Range(forceRange.x, forceRange.y), ForceMode.Impulse); }
                         spawnedObjects.Add(tmp);
                         yield return new WaitForSeconds(Random.Range(burstSpawnDelayRange.x, burstSpawnDelayRange.y));
-                    }  
+                    }
                 }
+            }
+                
             yield return new WaitForSeconds(spawnInterval);
+        }
+    }
+    void CountActiveSpawns(Collectable obj)
+    {
+        obj.OnReleased -= CountActiveSpawns;
+        spawnedObjects.Remove(obj);
+    }
+
+    private void OnDestroy()
+    {
+        foreach (var item in spawnedObjects)
+        {
+            item.OnReleased -= CountActiveSpawns;
         }
     }
 }

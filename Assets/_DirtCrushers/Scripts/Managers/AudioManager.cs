@@ -3,7 +3,7 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
-    [SerializeField] Vector2 defaultPitchRange = new (0.85f,1.05f);
+    [SerializeField] public Vector2 defaultPitchRange = new (0.85f,1.05f);
 
     [SerializeField] AudioSource musicSource1;
     [SerializeField] AudioSource musicSource2;
@@ -25,6 +25,14 @@ public class AudioManager : MonoBehaviour
     public void PlaySfxClip(AudioClip clip,Vector2 pitchRange)
     {
         sfxSource2D.pitch = Random.Range(pitchRange.x, pitchRange.y);
+        sfxSource2D.PlayOneShot(clip);
+    }
+
+    public void PlaySfxClipPooled(AudioClip clip)
+    {
+        var tmpSource = ObjectPooler.Instance.PoolSfx3D.Get();
+
+        sfxSource2D.pitch = Random.Range(defaultPitchRange.x, defaultPitchRange.y);
         sfxSource2D.PlayOneShot(clip);
     }
 
