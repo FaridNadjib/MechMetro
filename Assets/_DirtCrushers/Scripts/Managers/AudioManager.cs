@@ -3,7 +3,7 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
-    [SerializeField] Vector2 defaultPitchRange = new (0.85f,1.05f);
+    [SerializeField] public Vector2 defaultPitchRange = new (0.85f,1.05f);
 
     [SerializeField] AudioSource musicSource1;
     [SerializeField] AudioSource musicSource2;
@@ -26,6 +26,13 @@ public class AudioManager : MonoBehaviour
     {
         sfxSource2D.pitch = Random.Range(pitchRange.x, pitchRange.y);
         sfxSource2D.PlayOneShot(clip);
+    }
+
+    public void PlaySfxClipPooled(AudioClip clip,Vector3 spawnPosition)
+    {
+        var tmp = ObjectPooler.Instance.PoolSfx3D.Get(); 
+        tmp.transform.position = spawnPosition; 
+        tmp.PlayClip(clip);
     }
 
     // ToDO: fading music and ambiance.

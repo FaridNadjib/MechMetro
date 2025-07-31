@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5287231396039300788
+--- !u!1 &5019322257170712100
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,49 +8,46 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2232751089226969362}
-  - component: {fileID: 8085013876722075468}
-  - component: {fileID: 2451613913362637166}
-  - component: {fileID: 2114030833841035990}
-  - component: {fileID: 3663484681214226701}
-  - component: {fileID: 9149836777761579761}
+  - component: {fileID: 3508207747848386663}
+  - component: {fileID: 2213263914778351465}
+  - component: {fileID: 6810964660412698828}
   m_Layer: 0
-  m_Name: GreyScrewCollectable
+  m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2232751089226969362
+--- !u!4 &3508207747848386663
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5287231396039300788}
+  m_GameObject: {fileID: 5019322257170712100}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2232751089226969362}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &8085013876722075468
+--- !u!33 &2213263914778351465
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5287231396039300788}
+  m_GameObject: {fileID: 5019322257170712100}
   m_Mesh: {fileID: 1257330161338282966, guid: 966c3b3cb8df8bc40b811b94193a869d, type: 3}
---- !u!23 &2451613913362637166
+--- !u!23 &6810964660412698828
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5287231396039300788}
+  m_GameObject: {fileID: 5019322257170712100}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -89,6 +86,41 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &5287231396039300788
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2232751089226969362}
+  - component: {fileID: 2114030833841035990}
+  - component: {fileID: 3663484681214226701}
+  - component: {fileID: 9149836777761579761}
+  m_Layer: 0
+  m_Name: ScrewCollectable
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2232751089226969362
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5287231396039300788}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3508207747848386663}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2114030833841035990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -104,6 +136,7 @@ MonoBehaviour:
   greyScrewValue: 1
   collectingClip: {fileID: 8300000, guid: 3cf8a22a780c5d14fbf29411c5c90800, type: 3}
   collectionPS: {fileID: 6967077032592202653, guid: ef57859d6ce5cbd479e30dcdbe769fe4, type: 3}
+  GotUsed: 0
 --- !u!135 &3663484681214226701
 SphereCollider:
   m_ObjectHideFlags: 0
