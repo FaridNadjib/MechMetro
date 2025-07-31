@@ -6,27 +6,12 @@ public class FeedbackRotater : FeedbackController
     [Header("Rotation settings:")]
     [SerializeField] private Vector3 targetRotation = new Vector3(0f, 0f, 360f);
     [SerializeField] private RotateMode rotateMode = RotateMode.FastBeyond360;
+    [SerializeField] bool setRelative = true;
 
-    public override void PlayFeedback()
-    {
-        if (waitForFinish && !isFinished) return;
-        isFinished = false;
-        transform.DORotate(targetRotation, duration, rotateMode).SetEase(ease).SetLoops(loops, loopType).SetRelative()
-            .OnComplete(() => { followUpMethod?.Invoke(); isFinished = true; });
-    }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    private void Start()
+    protected override void InitializeFeedback()
     {
         if (loops == -1) { waitForFinish = false; }
-        if (playOnAwake)
-        {
-            PlayFeedback();
-        }
-    }
-
-    private void OnDisable()
-    {
-        transform.DOKill();
+        tweener = transform.DORotate(targetRotation, duration, rotateMode).SetEase(ease).SetLoops(loops, loopType).SetRelative(setRelative)
+            .OnComplete(() => { followUpMethod?.Invoke(); isFinished = true; }).Pause();
     }
 }

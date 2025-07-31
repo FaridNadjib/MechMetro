@@ -5,15 +5,16 @@ public class ObjectPooler : MonoBehaviour
 {
     public static ObjectPooler Instance;
 
-    [Header("Bullet prefabs:")]
+    [Header("Pool prefabs:")]
     [SerializeField] private SfxSource3D sfxSource3DPrefab;
     [SerializeField] private Collectable[] screwPrefabs;
 
     [SerializeField] private int defaultPoolSize = 360;
     [SerializeField] private int maxPoolSize = 700;
 
-    // Bullet pools.
+    // Pools.
     public ObjectPool<SfxSource3D> PoolSfx3D { get; private set; }
+
     public ObjectPool<Collectable> PoolCollectables { get; private set; }
 
     private void Awake()
@@ -28,6 +29,7 @@ public class ObjectPooler : MonoBehaviour
     }
 
     #region SfxPool
+
     private SfxSource3D CreateSfxSource3D()
     {
         SfxSource3D obj = Instantiate(sfxSource3DPrefab, transform.position, Quaternion.identity);
@@ -35,31 +37,41 @@ public class ObjectPooler : MonoBehaviour
         obj.transform.parent = transform;
         return obj;
     }
+
     private void OnTakeSfxSource3DFromPool(SfxSource3D obj)
     {
         obj.gameObject.SetActive(true);
     }
+
     private void OnReturnSfxSource3DToPool(SfxSource3D obj) => obj.gameObject.SetActive(false);
+
     private void OnDestroySfxSource3D(SfxSource3D obj)
     {
         if (obj != null) Destroy(obj.gameObject);
     }
+
     #endregion SfxPool
 
     #region Collectable
+
     private Collectable CreateCollectable()
     {
-        Collectable collectable = Instantiate(screwPrefabs[Random.Range(0,screwPrefabs.Length)], transform.position, Quaternion.identity);
+        Collectable collectable = Instantiate(screwPrefabs[Random.Range(0, screwPrefabs.Length)], transform.position, Quaternion.identity);
         collectable.SetPool(PoolCollectables);
         collectable.transform.parent = transform;
         return collectable;
     }
+
     private void OnTakeCollectableFromPool(Collectable collectable)
     {
         collectable.GotUsed = false;
         collectable.gameObject.SetActive(true);
     }
+
     private void OnReturnCollectableToPool(Collectable collectable) => collectable.gameObject.SetActive(false);
-    private void OnDestroyCollectable(Collectable collectable) {if(collectable != null) Destroy(collectable.gameObject); }
+
+    private void OnDestroyCollectable(Collectable collectable)
+    { if (collectable != null) Destroy(collectable.gameObject); }
+
     #endregion Collectable
 }

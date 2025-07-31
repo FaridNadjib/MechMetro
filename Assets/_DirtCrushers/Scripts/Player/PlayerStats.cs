@@ -77,6 +77,8 @@ public class PlayerStats : ScriptableObject
 
     public void AddEnergy(float amount)
     {
+        if (currentEnergyLevel >= maxEnergy) return;
+
         currentEnergyLevel += amount;
         if (currentEnergyLevel >= maxEnergy) currentEnergyLevel = maxEnergy;
         OnEnergyChanged?.Invoke(currentEnergyLevel / maxEnergy);
@@ -86,14 +88,25 @@ public class PlayerStats : ScriptableObject
             OnEnergyDepleted?.Invoke(energyDepleted);
         }
     }
-    public void SpendEnergy(float amount)
+    public bool SpendEnergy(float amount)
     {
-        currentEnergyLevel -= amount;
-        if (currentEnergyLevel < 0f) { currentEnergyLevel = 0f;
-            energyDepleted = true;
-            OnEnergyDepleted?.Invoke(energyDepleted);
+        if(currentEnergyLevel >= amount)
+        {
+            currentEnergyLevel -= amount;
+            if (currentEnergyLevel < 0f)
+            {
+                currentEnergyLevel = 0f;
+                energyDepleted = true;
+                OnEnergyDepleted?.Invoke(energyDepleted);
+            }
+            OnEnergyChanged?.Invoke(currentEnergyLevel / maxEnergy);
+            return true;
         }
-        OnEnergyChanged?.Invoke(currentEnergyLevel/maxEnergy);
+        else
+        {
+            return false;
+        }
+        
     }
 
     public void UpdateTimer()

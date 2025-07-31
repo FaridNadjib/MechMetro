@@ -3,18 +3,11 @@ using UnityEngine;
 
 public class FeedbackScaler : FeedbackController
 {
+    [Header("Scaling settings:")]
     [SerializeField] Vector3 endScale = Vector3.one;
     [SerializeField, Tooltip("Treated as ratio, 1 being 100% of starting scale.")] Vector3 startScale = Vector3.one;
 
-    public override void PlayFeedback()
-    {
-        if (waitForFinish && !isFinished) return;
-        isFinished = false;
-        transform.DOScale(endScale, duration).From(startScale).SetEase(ease).SetLoops(loops, loopType)
-            .OnComplete(() => { followUpMethod?.Invoke(); isFinished = true; });
-    }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    private void Start()
+    protected override void InitializeFeedback()
     {
         Vector3 tmpScale = transform.localScale;
         tmpScale.x *= startScale.x;
@@ -24,14 +17,7 @@ public class FeedbackScaler : FeedbackController
 
         if (loops == -1) { waitForFinish = false; }
 
-        if (playOnAwake)
-        {
-            PlayFeedback();
-        }
-    }
-
-    private void OnDisable()
-    {
-        transform.DOKill();
+        tweener = transform.DOScale(endScale, duration).From(startScale).SetEase(ease).SetLoops(loops, loopType)
+            .OnComplete(() => { followUpMethod?.Invoke(); isFinished = true; }).Pause();
     }
 }

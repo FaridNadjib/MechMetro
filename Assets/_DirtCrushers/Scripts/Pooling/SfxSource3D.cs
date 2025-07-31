@@ -4,28 +4,22 @@ using UnityEngine.Pool;
 
 public class SfxSource3D : MonoBehaviour
 {
-    AudioSource source;
-    [SerializeField] Vector2 pitchRange = new Vector2(0.85f,1.05f);
-    ObjectPool<SfxSource3D> pool;
+    private AudioSource source;
+    [SerializeField] private Vector2 pitchRange = new Vector2(0.85f, 1.05f);
+    private ObjectPool<SfxSource3D> pool;
 
-    private void Awake()
-    {
-        source = GetComponent<AudioSource>();
-    }
+    private void Awake() => source = GetComponent<AudioSource>();
 
-    public void PlayClip(AudioClip clip)
-    {
-        StartCoroutine(PlayingRoutine(clip));
-    }
+    public void PlayClip(AudioClip clip) => StartCoroutine(PlayingRoutine(clip));
 
-    IEnumerator PlayingRoutine(AudioClip clip)
+    private IEnumerator PlayingRoutine(AudioClip clip)
     {
         source.pitch = Random.Range(pitchRange.x, pitchRange.y);
         source.clip = clip;
         source.Play();
         while (source.isPlaying)
         {
-            yield return null;  
+            yield return null;
         }
         pool.Release(this);
     }

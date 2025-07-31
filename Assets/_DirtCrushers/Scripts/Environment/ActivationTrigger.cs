@@ -3,15 +3,16 @@ using UnityEngine.Events;
 
 public class ActivationTrigger : MonoBehaviour
 {
-    [SerializeField] string[] tagsToCompare = { "Player" };
-    [SerializeField] UnityEvent activationMethods;
-    [SerializeField] bool destroyAfterTrigger = false;
-    [SerializeField] UnityEvent deactivationMethods;
-
+    [SerializeField] private string[] tagsToCompare = { "Player" };
+    [SerializeField] private UnityEvent activationMethods;
+    [SerializeField] private bool destroyAfterTrigger = false;
+    [SerializeField] private UnityEvent deactivationMethods;
+    private bool gotUsed = false;
 
     private void OnTriggerEnter(Collider other)
     {
-        foreach (string tag in tagsToCompare) { if (other.CompareTag(tag)) { activationMethods?.Invoke(); if (destroyAfterTrigger) { Destroy(this); } break; } };
+        if (!gotUsed)
+            foreach (string tag in tagsToCompare) { if (other.CompareTag(tag)) { gotUsed = true; activationMethods?.Invoke(); if (destroyAfterTrigger) { Destroy(this); } break; } };
     }
 
     private void OnTriggerExit(Collider other)

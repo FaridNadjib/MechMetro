@@ -6,26 +6,29 @@ using UnityEngine;
 public class CollectableSpawner : MonoBehaviour
 {
     [Header("Base info:")]
-    [SerializeField] bool useForce = true;
-    [SerializeField] Vector2 forceRange = new(0.5f, 2f);
-    [SerializeField] Transform spawnDirection;
-    [Header("Spawn info:")]
-    [SerializeField] float initialSpawnDelay = 3f;
-    [SerializeField] Vector2 burstSpawnDelayRange = new(0.05f,0.25f);
-    [SerializeField] int burstSpawnAmount = 5;
-    [SerializeField] float spawnInterval = 20f;
-    [SerializeField] int maxSpawnAmount = 15;
-    [SerializeField] bool spawnOnAwake = true;
-    [SerializeField] Vector2 spawnAngleLimits = new(-50f,50f);
-    [Header("Feedback related:")]
-    [SerializeField] AudioClip spawnClip;
-    List<Collectable> spawnedObjects;
+    [SerializeField] private bool useForce = true;
+    [SerializeField] private Vector2 forceRange = new(0.5f, 2f);
+    [SerializeField] private Transform spawnDirection;
 
-    bool isSpawning = false;
-    Quaternion initialSpawnerRotation;
+    [Header("Spawn info:")]
+    [SerializeField] private float initialSpawnDelay = 3f;
+    [SerializeField] private Vector2 burstSpawnDelayRange = new(0.05f, 0.25f);
+    [SerializeField] private int burstSpawnAmount = 5;
+    [SerializeField] private float spawnInterval = 20f;
+    [SerializeField] private int maxSpawnAmount = 15;
+    [SerializeField] private bool spawnOnAwake = true;
+    [SerializeField] private Vector2 spawnAngleLimits = new(-50f, 50f);
+
+    [Header("Feedback related:")]
+    [SerializeField] private AudioClip spawnClip;
+
+    private List<Collectable> spawnedObjects;
+
+    private bool isSpawning = false;
+    private Quaternion initialSpawnerRotation;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Start()
     {
         spawnedObjects = new List<Collectable>();
         initialSpawnerRotation = spawnDirection.rotation;
@@ -34,17 +37,17 @@ public class CollectableSpawner : MonoBehaviour
 
     public void SpawnObjects()
     {
-        if(!isSpawning) { StartCoroutine(SpawnRoutine()); }
+        if (!isSpawning) { StartCoroutine(SpawnRoutine()); }
     }
 
-    IEnumerator SpawnRoutine()
+    private IEnumerator SpawnRoutine()
     {
         isSpawning = true;
         yield return new WaitForSeconds(initialSpawnDelay);
 
         while (isSpawning)
         {
-            for (int i = spawnedObjects.Count -1; i >=0; i--)
+            for (int i = spawnedObjects.Count - 1; i >= 0; i--)
                 if (spawnedObjects[i] == null) spawnedObjects.RemoveAt(i);
 
             if (spawnedObjects.Count < maxSpawnAmount)
@@ -67,11 +70,12 @@ public class CollectableSpawner : MonoBehaviour
                     }
                 }
             }
-                
+
             yield return new WaitForSeconds(spawnInterval);
         }
     }
-    void CountActiveSpawns(Collectable obj)
+
+    private void CountActiveSpawns(Collectable obj)
     {
         obj.OnReleased -= CountActiveSpawns;
         spawnedObjects.Remove(obj);

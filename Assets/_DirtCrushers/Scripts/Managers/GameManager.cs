@@ -4,11 +4,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-
-
-    [SerializeField] bool lockCursor = true;
-    [field:SerializeField] public PlayerStats PlayerStats { get; private set; }
-
+    [SerializeField] private bool lockCursor = true;
+    [field: SerializeField] public PlayerStats PlayerStats { get; private set; }
 
     private void Awake()
     {
@@ -17,22 +14,14 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
         else { Destroy(gameObject); }
-
-        
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Start()
     {
         PlayerStats.InitializeStats();
-        if(lockCursor)
+        if (lockCursor)
             Cursor.lockState = CursorLockMode.Locked;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void FixedUpdate()
