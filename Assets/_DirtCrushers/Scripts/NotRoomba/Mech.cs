@@ -9,6 +9,7 @@ public class Mech : MonoBehaviour
     private PlayerControlledEntity playerControlledEntity;
 
     private bool bIsGrounded = false;
+    private bool bIsGrinding = false;
 
     private BoxCollider GroundCheckBoxCollider;
 
@@ -48,6 +49,24 @@ public class Mech : MonoBehaviour
         return bIsGrounded;
     }
 
+    public void StartGrinding()
+    {
+        bIsGrinding = true;
+        if (playerControlledEntity != null)
+        {
+            playerControlledEntity.enabled = false;
+        }
+    }
+
+    public void EndGrinding()
+    {
+        bIsGrinding = false;
+        if (playerControlledEntity != null)
+        {
+            playerControlledEntity.enabled = true;
+        }
+    }
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -85,6 +104,7 @@ public class Mech : MonoBehaviour
     void FixedUpdate()
     {
         if (playerControlledEntity == null) return;
+        if (bIsGrinding) return; // Skip normal movement when grinding
 
         // Only proceed if we're grounded
         if (!IsGroundedByWheels()) return;
