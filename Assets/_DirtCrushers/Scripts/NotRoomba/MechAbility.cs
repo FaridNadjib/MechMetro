@@ -15,12 +15,20 @@ public abstract class MechAbility : MonoBehaviour
     protected bool canActivate = true;
     protected PlayerControlledEntity playerControlledEntity;
 
+    protected Mech mechRef;
+
     protected virtual void Start()
     {
         playerControlledEntity = GetComponent<PlayerControlledEntity>();
         if (playerControlledEntity == null)
         {
             Debug.LogWarning($"No PlayerControlledEntity found on {gameObject.name} for {GetType().Name}");
+        }
+
+        mechRef = GetComponent<Mech>();
+        if (mechRef == null)
+        {
+            Debug.LogWarning($"No Mech component found on {gameObject.name} for {GetType().Name}");
         }
     }
 
