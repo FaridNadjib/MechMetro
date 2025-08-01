@@ -85,8 +85,6 @@ public class Mech : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-
-        Debug.Log("Mech grounded: " + other.gameObject.name);
         NumGroundCheckOverlaps++;
         bIsGrounded = true;
     }
@@ -98,7 +96,6 @@ public class Mech : MonoBehaviour
         {
             bIsGrounded = false;
         }
-        Debug.Log("Mech no longer grounded: " + other.gameObject.name);
     }
 
     void FixedUpdate()
