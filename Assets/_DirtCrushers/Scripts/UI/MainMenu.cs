@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
@@ -8,9 +9,8 @@ public class MainMenu : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public void LoadLevel(int index)
     {
-        
+        SceneManager.LoadScene(index);
     }
 }
