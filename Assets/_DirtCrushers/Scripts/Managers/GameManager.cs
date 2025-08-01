@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private bool lockCursor = true;
     [field: SerializeField] public PlayerStats PlayerStats { get; private set; }
+    [field: SerializeField] public Transform Player { get; private set; }
 
     private void Awake()
     {
@@ -20,6 +21,8 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         PlayerStats.InitializeStats();
+        var playerTags = GameObject.FindGameObjectsWithTag("Player");
+        foreach (var tag in playerTags) { if (tag.transform.parent == null) {Player = tag.transform; break; } }
         if (lockCursor)
             Cursor.lockState = CursorLockMode.Locked;
     }

@@ -7,27 +7,27 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MAT_AllIn13DShader
-  m_Shader: {fileID: 4800000, guid: 0dde7f0097aeb2541aea684ca0ad0e3c, type: 3}
+  m_Name: Acid
+  m_Shader: {fileID: 4800000, guid: 8a970d62549d99d4eab51bffa33b0ee9, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _CAST_SHADOWS_ON
   - _EMISSION_ON
   - _FOG_ON
   - _GREYSCALESTAGE_BEFORELIGHTING
+  - _INTERSECTION_GLOW_ON
   - _LIGHTMODEL_CLASSIC
   - _MATCAPBLENDMODE_MULTIPLY
   - _NORMAL_MAP_ON
   - _OUTLINETYPE_NONE
-  - _RECEIVE_SHADOWS_ON
   - _REFLECTIONS_CLASSIC
   - _RIMLIGHTINGSTAGE_BEFORELIGHTINGLAST
+  - _SCROLL_TEXTURE_ON
   - _SHADINGMODEL_PBR
   - _SPECULARMODEL_CLASSIC
   - _TEXTUREBLENDINGMODE_RGB
   - _USE_WIND_VERTICAL_MASK
-  - _VERTEX_DISTORTION_ON
+  - _WAVE_UV_ON
   m_InvalidKeywords:
   - _ALBEDOVERTEXCOLORMODE_REPLACE
   - _COLORRAMPLIGHTINGSTAGE_AFTERLIGHTING
@@ -90,8 +90,8 @@ Material:
         m_Scale: {x: 15, y: 15}
         m_Offset: {x: 5, y: 5}
     - _EmissionMap:
-        m_Texture: {fileID: 2800000, guid: f17b304801f7c1d47aaa274463ac04ee, type: 3}
-        m_Scale: {x: 4, y: 2.5}
+        m_Texture: {fileID: 2800000, guid: f0227a91a3a34cf459bf745bb80cc352, type: 3}
+        m_Scale: {x: 2, y: 1}
         m_Offset: {x: 0, y: 0}
     - _FadeTex:
         m_Texture: {fileID: 2800000, guid: fcb69fdadf254834880fe3c443965278, type: 3}
@@ -169,7 +169,7 @@ Material:
     - _BlendingMaskSmoothnessWhite: 0.4
     - _Brightness: 0
     - _BrightnessLM: 0
-    - _CastShadowsOn: 1
+    - _CastShadowsOn: 0
     - _ColorMask: 15
     - _ColorRampBlend: 1
     - _ColorRampLightingStage: 1
@@ -184,10 +184,10 @@ Material:
     - _CustomAmbientLightOn: 0
     - _CustomShadowColorOn: 0
     - _DepthColoringOn: 0
-    - _DepthGlowColorIntensity: 25
-    - _DepthGlowDist: 0.2
+    - _DepthGlowColorIntensity: 2
+    - _DepthGlowDist: 4.6
     - _DepthGlowGlobalIntensity: 2
-    - _DepthGlowPower: 25
+    - _DepthGlowPower: 9.98
     - _DistortAmount: 0.3
     - _DistortTexXSpeed: 2
     - _DistortTexYSpeed: 2
@@ -250,7 +250,7 @@ Material:
     - _InflateBlend: 1
     - _IntersectionFadeFactor: 1
     - _IntersectionFadeOn: 0
-    - _IntersectionGlowOn: 0
+    - _IntersectionGlowOn: 1
     - _LightModel: 1
     - _LightmapColorCorrection: 0
     - _Matcap: 0
@@ -278,7 +278,7 @@ Material:
     - _PosterizeGamma: 0.75
     - _PosterizeNumColors: 8
     - _RecalculateNormals: 0
-    - _ReceiveShadowsOn: 1
+    - _ReceiveShadowsOn: 0
     - _Reflections: 1
     - _ReflectionsAtten: 1
     - _RenderPreset: 2
@@ -291,9 +291,9 @@ Material:
     - _SSSPower: 1
     - _ScaleWithCameraDistance: 0
     - _ScreenSpaceUVOn: 0
-    - _ScrollTextureOn: 0
-    - _ScrollTextureX: 1
-    - _ScrollTextureY: 1
+    - _ScrollTextureOn: 1
+    - _ScrollTextureX: 0.3
+    - _ScrollTextureY: 0
     - _ShadingModel: 1
     - _ShakeBlend: 1
     - _ShakeSpeedMult: 1
@@ -324,16 +324,16 @@ Material:
     - _UseVerticalMask: 1
     - _VertexColorBlending: 1
     - _VertexDistortionAmount: 1.767
-    - _VertexDistortionOn: 1
+    - _VertexDistortionOn: 0
     - _VertexInflate: 0
     - _VertexShakeOn: 0
     - _VoxelBlend: 1
     - _VoxelSize: 2
     - _Voxelize: 0
     - _WaveAmount: 7
-    - _WaveSpeed: 10
-    - _WaveStrength: 2.6
-    - _WaveUVOn: 0
+    - _WaveSpeed: 3.5
+    - _WaveStrength: 2.3
+    - _WaveUVOn: 1
     - _WaveX: 0
     - _WaveY: 0.5
     - _WindAttenuation: 0.278
@@ -347,7 +347,7 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _CustomAmbientColor: {r: 0.65, g: 0.65, b: 0.65, a: 1}
     - _DepthGlowColor: {r: 1, g: 0.96512234, b: 0.6, a: 1}
-    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _EmissionColor: {r: 0.11137152, g: 1, b: 0, a: 1}
     - _FadeBurnColor: {r: 2.6701567, g: 0.052356016, b: 0, a: 1}
     - _GlitchOffset: {r: -0.5, g: 0, b: 0, a: 0}
     - _GradientHeightColor01: {r: 0.2, g: 0.2, b: 0.2, a: 1}
